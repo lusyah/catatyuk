@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatatYuk! - Platform Kolaborasi Catatan SMA/SMK</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR HEADER -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand-logo">
+                <i class="fa-solid fa-book-open-reader"></i> Catat<span>Yuk!</span>
+            </a>
+            
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Cari materi, bab, atau mata pelajaran...">
+            </div>
+
+            <button class="btn btn-primary" id="openModalBtn">
+                <i class="fa-solid fa-plus"></i> Bagikan Catatan
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO / BANNER SECTION -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Belajar Lebih Mudah dengan Catatan Teman Sebaya</h1>
+            <p>Temukan ringkasan materi, mindmap, dan catatan berkualitas khusus untuk siswa SMA & SMK se-Indonesia.</p>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="container main-layout">
+        
+        <!-- SIDEBAR FILTER -->
+        <aside class="sidebar">
+            <div class="filter-card">
+                <h3><i class="fa-solid fa-filter"></i> Filter Materi</h3>
+                
+                <div class="filter-group">
+                    <label>Tingkat Sekolah</label>
+                    <select id="filterCategory">
+                        <option value="all">Semua Jenis</option>
+                        <option value="SMA">SMA (Umum/IPA/IPS)</option>
+                        <option value="SMK">SMK (Kejuruan)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Tingkat Kelas</label>
+                    <select id="filterGrade">
+                        <option value="all">Semua Kelas</option>
+                        <option value="10">Kelas 10</option>
+                        <option value="11">Kelas 11</option>
+                        <option value="12">Kelas 12</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Mata Pelajaran</label>
+                    <select id="filterSubject">
+                        <option value="all">Semua Pelajaran</option>
+                        <option value="Matematika">Matematika</option>
+                        <option value="Fisika">Fisika</option>
+                        <option value="Biologi">Biologi</option>
+                        <option value="Ekonomi">Ekonomi</option>
+                        <option value="Informatika">Informatika / RPL</option>
+                        <option value="Bahasa Inggris">Bahasa Inggris</option>
+                        <option value="Geografi">Geografi</option>
+                        <option value="Kimia">Kimia</option>
+                        <option value="Sosiologi"Sosiologi></option>
+                    </select>
+                </div>
+
+                <button class="btn btn-outline" id="resetFilterBtn">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                </button>
+            </div>
+        </aside>
+
+        <!-- NOTE LIST GRID -->
+        <section class="content-area">
+            <div class="content-header">
+                <h2 id="sectionTitle">Daftar Catatan Terbaru</h2>
+                <div class="view-tabs">
+                    <button class="tab-btn active" data-tab="all">Semua</button>
+                    <button class="tab-btn" data-tab="bookmarked"><i class="fa-solid fa-bookmark"></i> Tersimpan</button>
+                </div>
+            </div>
+
+            <!-- GRID CONTAINER UTAMA CATATAN -->
+            <div class="notes-grid" id="notesGrid">
+                <!-- Data catatan akan di-render di sini melalui JS -->
+            </div>
+
+            <!-- EMPTY STATE (JIKA TIDAK ADA HASIL) -->
+            <div class="empty-state hidden" id="emptyState">
+                <i class="fa-regular fa-folder-open empty-icon"></i>
+                <h3>Catatan tidak ditemukan</h3>
+                <p>Coba gunakan kata kunci lain atau ubah pilihan filter kamu.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL FORM BAGIKAN CATATAN -->
+    <div class="modal-overlay hidden" id="noteModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Bagikan Catatan Kamu</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            
+            <form id="addNoteForm">
+                <div class="form-group">
+                    <label for="noteTitle">Judul Catatan / Bab</label>
+                    <input type="text" id="noteTitle" placeholder="Contoh: Ringkasan Polinomial Kelas 11" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="noteCategory">Tingkat</label>
+                        <select id="noteCategory" required>
+                            <option value="SMA">SMA</option>
+                            <option value="SMK">SMK</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="noteGrade">Kelas</label>
+                        <select id="noteGrade" required>
+                            <option value="10">Kelas 10</option>
+                            <option value="11">Kelas 11</option>
+                            <option value="12">Kelas 12</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="noteSubject">Mata Pelajaran</label>
+                    <input type="text" id="noteSubject" placeholder="Contoh: Matematika, Pemrograman Web" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="authorName">Nama Penulis / Uploader</label>
+                    <input type="text" id="authorName" placeholder="Contoh: Budi (SMKN 1 Jakarta)" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="noteDescription">Ringkasan Singkat / Deskripsi</label>
+                    <textarea id="noteDescription" rows="3" placeholder="Tuliskan poin-poin penting yang ada di catatan ini..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="noteLink">Link File (Google Drive / Canva / Gambar)</label>
+                    <input type="url" id="noteLink" placeholder="https://drive.google.com/file/d/..." required>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancelModalBtn">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publikasikan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <strong>CatatYuk!</strong> - Dibuat untuk Pelajar SMA/SMK Indonesia. Hosted on GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
